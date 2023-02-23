@@ -165,12 +165,12 @@ int main(int argc, char **argv) {
   WC_INIT_TIMER(ttimer);
   WC_START_TIMER(ttimer);
 
-	for (int i=0; i<g.nproc; i++) {
-	  if (i == g.rank) {
-		  dprintf("hello from thread %d of %d\n", g.rank, g.nproc);
-		}
-		shmem_barrier_all();
-	}
+  for (int i=0; i<g.nproc; i++) {
+    if (i == g.rank) {
+      dprintf("hello from thread %d of %d\n", g.rank, g.nproc);
+    }
+    shmem_barrier_all();
+  }
 
   shmem_barrier_all();
   WC_STOP_TIMER(ttimer);
