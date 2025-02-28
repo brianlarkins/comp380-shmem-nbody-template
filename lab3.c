@@ -130,7 +130,8 @@ void print_body(body_t *b) {
 
 int main(int argc, char **argv) {
   char c;
-  wc_timer_t ttimer, itimer;
+  wc_timer_t ttimer; // total time
+  wc_timer_t itimer; // per-iteration timer
 
   memset(&g, 0, sizeof(g));    // zero out global data structure
   shmem_init();                // initialize OpenSHMEM
@@ -163,7 +164,10 @@ int main(int argc, char **argv) {
 
   // fired up, ready to go
   WC_INIT_TIMER(ttimer);
+  WC_INIT_TIMER(itimer);
+
   WC_START_TIMER(ttimer);
+  WC_START_TIMER(itimer);
 
   for (int i=0; i<g.nproc; i++) {
     if (i == g.rank) {
@@ -173,6 +177,7 @@ int main(int argc, char **argv) {
   }
 
   shmem_barrier_all();
+  WC_STOP_TIMER(itimer);
   WC_STOP_TIMER(ttimer);
   eprintf("execution time: %7.4f ms\n", WC_READ_TIMER_MSEC(ttimer));
 
