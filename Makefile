@@ -8,7 +8,7 @@ lab3: lab3.o wctimer.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
 
 nbody: 
-	clang -o nbody nbody.c -lm
+	gcc -o nbody nbody.c -lm
 
 clean:
 	rm -f *.o lab3 nbody
